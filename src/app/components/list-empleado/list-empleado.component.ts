@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatTableDataSource} from '@angular/material/table'
 
 
 
@@ -36,5 +37,12 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 export class ListEmpleadoComponent {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+
 }
