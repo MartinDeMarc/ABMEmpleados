@@ -1,6 +1,7 @@
-import { Component, ViewChild, OnInit, AfterViewInit  } from '@angular/core';
-import { MatTableDataSource} from '@angular/material/table'
-import {MatPaginator, } from '@angular/material/paginator';
+import { Component, ViewChild, AfterViewInit  } from '@angular/core';
+import { MatTableDataSource, } from '@angular/material/table'
+import {MatPaginator,   } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 export interface PeriodicElement {
   name: string;
@@ -32,12 +33,14 @@ export class ListEmpleadoComponent implements  AfterViewInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
+  @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   constructor(){}
 
   ngAfterViewInit() {
     if (this.paginator) {
       this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     }
   }
 
