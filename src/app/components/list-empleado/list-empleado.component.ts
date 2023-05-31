@@ -1,8 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit  } from '@angular/core';
 import { MatTableDataSource} from '@angular/material/table'
-
-
-
+import {MatPaginator, } from '@angular/material/paginator';
 
 export interface PeriodicElement {
   name: string;
@@ -24,20 +22,24 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
 ];
 
-/**
- * @title Basic use of `<table mat-table>`
- */
-
 @Component({
   selector:'app-list-empleados',
   templateUrl: './list-empleado.component.html',
   styleUrls: ['./list-empleado.component.css']
 })
 
-
-export class ListEmpleadoComponent {
+export class ListEmpleadoComponent implements  AfterViewInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  constructor(){}
+
+  ngAfterViewInit() {
+    if (this.paginator) {
+      this.dataSource.paginator = this.paginator;
+    }
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
